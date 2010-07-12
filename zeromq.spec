@@ -12,6 +12,9 @@ BuildRequires:	automake
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
+Zero Message Queue is a small, fast, and free software library that
+gives you message-passing concurrency for applications in most common
+languages.
 
 %package devel
 Summary:	NSPR library header files for development
@@ -43,9 +46,10 @@ Statyczna biblioteka NSPR.
 %setup -q
 
 %build
+%{__aclocal}
 %{__autoconf}
+%{__autoheader}
 %configure
-
 %{__make}
 
 %install
@@ -53,6 +57,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -63,10 +69,13 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libzmq.so.*.*.*
-%{_bindir}/zmq_forwarder
-%{_bindir}/zmq_queue
-%{_bindir}/zmq_streamer
-
+%attr(755,root,root) %ghost %{_libdir}/libzmq.so.0
+%attr(755,root,root) %{_bindir}/zmq_forwarder
+%attr(755,root,root) %{_bindir}/zmq_queue
+%attr(755,root,root) %{_bindir}/zmq_streamer
+%{_mandir}/man1/zmq_forwarder.1*
+%{_mandir}/man1/zmq_queue.1*
+%{_mandir}/man1/zmq_streamer.1*
 
 %files devel
 %defattr(644,root,root,755)
@@ -74,39 +83,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/zmq.hpp
 %{_libdir}/libzmq.so
 %{_pkgconfigdir}/libzmq.pc
-%{_mandir}/man1/zmq_forwarder.1*
-%{_mandir}/man1/zmq_queue.1*
-%{_mandir}/man1/zmq_streamer.1*
-%{_mandir}/man3/zmq_bind.3*
-%{_mandir}/man3/zmq_close.3*
-%{_mandir}/man3/zmq_connect.3*
-%{_mandir}/man3/zmq_errno.3*
-%{_mandir}/man3/zmq_getsockopt.3*
-%{_mandir}/man3/zmq_init.3*
-%{_mandir}/man3/zmq_msg_close.3*
-%{_mandir}/man3/zmq_msg_copy.3*
-%{_mandir}/man3/zmq_msg_data.3*
-%{_mandir}/man3/zmq_msg_init.3*
-%{_mandir}/man3/zmq_msg_init_data.3*
-%{_mandir}/man3/zmq_msg_init_size.3*
-%{_mandir}/man3/zmq_msg_move.3*
-%{_mandir}/man3/zmq_msg_size.3*
-%{_mandir}/man3/zmq_poll.3*
-%{_mandir}/man3/zmq_recv.3*
-%{_mandir}/man3/zmq_send.3*
-%{_mandir}/man3/zmq_setsockopt.3*
-%{_mandir}/man3/zmq_socket.3*
-%{_mandir}/man3/zmq_strerror.3*
-%{_mandir}/man3/zmq_term.3*
-%{_mandir}/man3/zmq_version.3*
-%{_mandir}/man7/zmq.7*
-%{_mandir}/man7/zmq_cpp.7*
-%{_mandir}/man7/zmq_epgm.7*
-%{_mandir}/man7/zmq_inproc.7*
-%{_mandir}/man7/zmq_ipc.7*
-%{_mandir}/man7/zmq_pgm.7*
-%{_mandir}/man7/zmq_tcp.7*
+%{_mandir}/man3/zmq*.3*
+%{_mandir}/man7/zmq*.7*
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/lib*.a
+%{_libdir}/libzmq.a
