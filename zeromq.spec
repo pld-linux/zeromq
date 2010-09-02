@@ -1,11 +1,11 @@
 Summary:	Zero Message Queue
 Name:		zeromq
-Version:	2.0.7
+Version:	2.0.8
 Release:	1
 License:	LGPL v3+
 Group:		Libraries
 Source0:	http://www.zeromq.org/local--files/area:download/%{name}-%{version}.tar.gz
-# Source0-md5:	c9cb3ee4499df1781f8ddc03c20d656b
+# Source0-md5:	6a5c362deaaa24e0e94b42e13f68da51
 URL:		http://www.zeromq.org/
 BuildRequires:	autoconf >= 2.12
 BuildRequires:	automake
@@ -46,8 +46,10 @@ Statyczna biblioteka NSPR.
 %setup -q
 
 %build
+%{__libtoolize}
 %{__aclocal}
 %{__autoconf}
+%{__automake}
 %{__autoheader}
 %configure
 %{__make}
@@ -73,14 +75,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/zmq_forwarder
 %attr(755,root,root) %{_bindir}/zmq_queue
 %attr(755,root,root) %{_bindir}/zmq_streamer
-%{_mandir}/man1/zmq_forwarder.1*
-%{_mandir}/man1/zmq_queue.1*
-%{_mandir}/man1/zmq_streamer.1*
 
 %files devel
 %defattr(644,root,root,755)
 %{_includedir}/zmq.h
 %{_includedir}/zmq.hpp
+%{_includedir}/zmq_utils.h
 %{_libdir}/libzmq.so
 %{_pkgconfigdir}/libzmq.pc
 %{_mandir}/man3/zmq*.3*
