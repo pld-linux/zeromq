@@ -9,6 +9,10 @@ Source0:	http://www.zeromq.org/local--files/area:download/%{name}-%{version}.tar
 URL:		http://www.zeromq.org/
 BuildRequires:	autoconf >= 2.12
 BuildRequires:	automake
+BuildRequires:	libstdc++-devel
+BuildRequires:	libtool
+BuildRequires:	libuuid-devel
+BuildRequires:	pkgconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
