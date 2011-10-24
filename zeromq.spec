@@ -1,11 +1,11 @@
-Summary:	Zero Message Queue
+Summary:	ØMQ - Zero Message Queue
 Name:		zeromq
-Version:	2.0.8
+Version:	2.1.10
 Release:	1
 License:	LGPL v3+
 Group:		Libraries
-Source0:	http://www.zeromq.org/local--files/area:download/%{name}-%{version}.tar.gz
-# Source0-md5:	6a5c362deaaa24e0e94b42e13f68da51
+Source0:	http://download.zeromq.org/%{name}-%{version}.tar.gz
+# Source0-md5:	f034096095fa76041166a8861e9d71b7
 URL:		http://www.zeromq.org/
 BuildRequires:	autoconf >= 2.12
 BuildRequires:	automake
@@ -16,35 +16,38 @@ BuildRequires:	pkgconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Zero Message Queue is a small, fast, and free software library that
-gives you message-passing concurrency for applications in most common
-languages.
+The ØMQ lightweight messaging kernel is a library which extends the
+standard socket interfaces with features traditionally provided by
+specialised messaging middleware products. ØMQ sockets provide an
+abstraction of asynchronous message queues, multiple messaging
+patterns, message filtering (subscriptions), seamless access to
+multiple transport protocols and more.
 
 %package devel
-Summary:	NSPR library header files for development
-Summary(pl.UTF-8):	Pliki nagłówkowe bibliotek NSPR
+Summary:	ØMQ library header files for development
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki ØMQ
 Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Obsoletes:	zeromq-pthreads-devel
 
 %description devel
-Header files for the NSPR library from Netscape.
+ØMQ library header files for development.
 
 %description devel -l pl.UTF-8
-Pliki nagłówkowe bibliotek NSPR z Netscape.
+Pliki nagłówkowe biblioteki ØMQ.
 
 %package static
-Summary:	Static NSPR library
-Summary(pl.UTF-8):	Statyczna biblioteka NSPR
+Summary:	Static ØMQ library
+Summary(pl.UTF-8):	Statyczna biblioteka ØMQ
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 Obsoletes:	zeromq-pthreads-static
 
 %description static
-Static NSPR library.
+Static ØMQ library.
 
 %description static -l pl.UTF-8
-Statyczna biblioteka NSPR.
+Statyczna biblioteka ØMQ.
 
 %prep
 %setup -q
@@ -75,10 +78,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libzmq.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libzmq.so.0
-%attr(755,root,root) %{_bindir}/zmq_forwarder
-%attr(755,root,root) %{_bindir}/zmq_queue
-%attr(755,root,root) %{_bindir}/zmq_streamer
+%attr(755,root,root) %ghost %{_libdir}/libzmq.so.1
 
 %files devel
 %defattr(644,root,root,755)
