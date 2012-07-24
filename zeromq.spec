@@ -1,11 +1,11 @@
 Summary:	ØMQ - Zero Message Queue
 Name:		zeromq
-Version:	2.1.11
+Version:	2.2.0
 Release:	1
 License:	LGPL v3+
 Group:		Libraries
 Source0:	http://download.zeromq.org/%{name}-%{version}.tar.gz
-# Source0-md5:	f0f9fd62acb1f0869d7aa80379b1f6b7
+# Source0-md5:	1b11aae09b19d18276d0717b2ea288f6
 URL:		http://www.zeromq.org/
 BuildRequires:	autoconf >= 2.12
 BuildRequires:	automake
