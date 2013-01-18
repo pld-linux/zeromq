@@ -1,11 +1,12 @@
+%bcond_without	tests
 Summary:	ØMQ - Zero Message Queue
 Name:		zeromq
-Version:	2.2.0
+Version:	3.2.2
 Release:	1
 License:	LGPL v3+
 Group:		Libraries
 Source0:	http://download.zeromq.org/%{name}-%{version}.tar.gz
-# Source0-md5:	1b11aae09b19d18276d0717b2ea288f6
+# Source0-md5:	df68431d9300da84a1a5f9a2784e33de
 URL:		http://www.zeromq.org/
 BuildRequires:	autoconf >= 2.12
 BuildRequires:	automake
@@ -61,6 +62,10 @@ Statyczna biblioteka ØMQ.
 %configure
 %{__make}
 
+%if %{with tests}
+%{__make} check
+%endif
+
 %install
 rm -rf $RPM_BUILD_ROOT
 
@@ -78,12 +83,11 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libzmq.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libzmq.so.1
+%attr(755,root,root) %ghost %{_libdir}/libzmq.so.3
 
 %files devel
 %defattr(644,root,root,755)
 %{_includedir}/zmq.h
-%{_includedir}/zmq.hpp
 %{_includedir}/zmq_utils.h
 %{_libdir}/libzmq.so
 %{_pkgconfigdir}/libzmq.pc
