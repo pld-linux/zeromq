@@ -1,5 +1,9 @@
-%bcond_without	tests
-Summary:	ØMQ - Zero Message Queue
+#
+# Conditional build:
+%bcond_without	tests		# build without tests
+
+Summary:	ZMQ - Zero Message Queue
+Summary(en.UTF-8):	ØMQ - Zero Message Queue
 Name:		zeromq
 Version:	3.2.2
 Release:	1
@@ -17,6 +21,14 @@ BuildRequires:	pkgconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
+The ZMQ lightweight messaging kernel is a library which extends the
+standard socket interfaces with features traditionally provided by
+specialised messaging middleware products. ZMQ sockets provide an
+abstraction of asynchronous message queues, multiple messaging
+patterns, message filtering (subscriptions), seamless access to
+multiple transport protocols and more.
+
+%description -l en.UTF-8
 The ØMQ lightweight messaging kernel is a library which extends the
 standard socket interfaces with features traditionally provided by
 specialised messaging middleware products. ØMQ sockets provide an
@@ -25,26 +37,34 @@ patterns, message filtering (subscriptions), seamless access to
 multiple transport protocols and more.
 
 %package devel
-Summary:	ØMQ library header files for development
+Summary:	ZMQ library header files for development
+Summary(en.UTF-8):	ØMQ library header files for development
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki ØMQ
 Group:		Development/Libraries
-Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 Obsoletes:	zeromq-pthreads-devel
 
 %description devel
+ØMQ library header files for development.
+
+%description devel -l en.UTF-8
 ØMQ library header files for development.
 
 %description devel -l pl.UTF-8
 Pliki nagłówkowe biblioteki ØMQ.
 
 %package static
-Summary:	Static ØMQ library
+Summary:	Static ZMQ library
+Summary(en.UTF-8):	Static ØMQ library
 Summary(pl.UTF-8):	Statyczna biblioteka ØMQ
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
+Requires:	%{name}-devel = %{version}-%{release}
 Obsoletes:	zeromq-pthreads-static
 
 %description static
+Static ZMQ library.
+
+%description static -l en.UTF-8
 Static ØMQ library.
 
 %description static -l pl.UTF-8
