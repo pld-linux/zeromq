@@ -6,7 +6,7 @@ Summary:	ZMQ - Zero Message Queue
 Summary(en.UTF-8):	ØMQ - Zero Message Queue
 Name:		zeromq
 Version:	3.2.2
-Release:	2
+Release:	3
 License:	LGPL v3+
 Group:		Libraries
 Source0:	http://download.zeromq.org/%{name}-%{version}.tar.gz
