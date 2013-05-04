@@ -5,12 +5,12 @@
 Summary:	ZMQ - Zero Message Queue
 Summary(en.UTF-8):	ØMQ - Zero Message Queue
 Name:		zeromq
-Version:	3.2.2
-Release:	3
+Version:	3.2.3
+Release:	1
 License:	LGPL v3+
 Group:		Libraries
 Source0:	http://download.zeromq.org/%{name}-%{version}.tar.gz
-# Source0-md5:	df68431d9300da84a1a5f9a2784e33de
+# Source0-md5:	1abf8246363249baf5931a065ee38203
 URL:		http://www.zeromq.org/
 BuildRequires:	autoconf >= 2.12
 BuildRequires:	automake
@@ -83,7 +83,7 @@ Statyczna biblioteka ØMQ.
 %{__make}
 
 %if %{with tests}
-%{__make} check
+%{__make} check -j1
 %endif
 
 %install
