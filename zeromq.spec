@@ -2,8 +2,9 @@
 # Conditional build:
 %bcond_without	tests		# build without tests
 
-Summary:	ZMQ - Zero Message Queue
+Summary:	0MQ - Zero Message Queue
 Summary(en.UTF-8):	ØMQ - Zero Message Queue
+Summary(pl.UTF-8):	ØMQ (Zero Message Queue) - kolejka komunikatów
 Name:		zeromq
 Version:	3.2.3
 Release:	1
@@ -12,18 +13,20 @@ Group:		Libraries
 Source0:	http://download.zeromq.org/%{name}-%{version}.tar.gz
 # Source0-md5:	1abf8246363249baf5931a065ee38203
 URL:		http://www.zeromq.org/
-BuildRequires:	autoconf >= 2.12
+BuildRequires:	asciidoc
+BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
 BuildRequires:	libuuid-devel
 BuildRequires:	pkgconfig
+BuildRequires:	xmlto
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-The ZMQ lightweight messaging kernel is a library which extends the
+The 0MQ lightweight messaging kernel is a library which extends the
 standard socket interfaces with features traditionally provided by
-specialised messaging middleware products. ZMQ sockets provide an
+specialised messaging middleware products. 0MQ sockets provide an
 abstraction of asynchronous message queues, multiple messaging
 patterns, message filtering (subscriptions), seamless access to
 multiple transport protocols and more.
@@ -36,8 +39,17 @@ abstraction of asynchronous message queues, multiple messaging
 patterns, message filtering (subscriptions), seamless access to
 multiple transport protocols and more.
 
+%description -l pl.UTF-8
+Lekkie jądro przekazywania komunikatów ØMQ to biblioteka rozszerzająca
+standardowe interfejsy gniazd o możliwości zwykle udostępniane przez
+specjalizowane produkty warstwy pośredniej do przekazywania
+komunikatów. Gniazda ØMQ udostępniają abstrakcję asynchronicznych
+kolejek komunikatów, wiele wzorców przekazywania komunikatów,
+filtrowanie komunikatów (subskrypce), przezroczysty dostęp do wielu
+protokołów transportowych i wiele innych możliwości.
+
 %package devel
-Summary:	ZMQ library header files for development
+Summary:	0MQ library header files for development
 Summary(en.UTF-8):	ØMQ library header files for development
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki ØMQ
 Group:		Development/Libraries
@@ -45,7 +57,7 @@ Requires:	%{name} = %{version}-%{release}
 Obsoletes:	zeromq-pthreads-devel
 
 %description devel
-ØMQ library header files for development.
+0MQ library header files for development.
 
 %description devel -l en.UTF-8
 ØMQ library header files for development.
@@ -54,7 +66,7 @@ Obsoletes:	zeromq-pthreads-devel
 Pliki nagłówkowe biblioteki ØMQ.
 
 %package static
-Summary:	Static ZMQ library
+Summary:	Static 0MQ library
 Summary(en.UTF-8):	Static ØMQ library
 Summary(pl.UTF-8):	Statyczna biblioteka ØMQ
 Group:		Development/Libraries
@@ -62,7 +74,7 @@ Requires:	%{name}-devel = %{version}-%{release}
 Obsoletes:	zeromq-pthreads-static
 
 %description static
-Static ZMQ library.
+Static 0MQ library.
 
 %description static -l en.UTF-8
 Static ØMQ library.
@@ -79,7 +91,8 @@ Statyczna biblioteka ØMQ.
 %{__autoconf}
 %{__automake}
 %{__autoheader}
-%configure
+%configure \
+	--disable-silent-rules
 %{__make}
 
 %if %{with tests}
@@ -92,7 +105,8 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
+# obsoleted by pkg-config
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -102,14 +116,15 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+%doc AUTHORS ChangeLog MAINTAINERS NEWS README
 %attr(755,root,root) %{_libdir}/libzmq.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libzmq.so.3
 
 %files devel
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libzmq.so
 %{_includedir}/zmq.h
 %{_includedir}/zmq_utils.h
-%{_libdir}/libzmq.so
 %{_pkgconfigdir}/libzmq.pc
 %{_mandir}/man3/zmq*.3*
 %{_mandir}/man7/zmq*.7*
