@@ -1,5 +1,6 @@
 #
 # Conditional build:
+%bcond_without	pgm		# PGM extension (using OpenPGM library)
 %bcond_without	tests		# build without tests
 
 Summary:	0MQ - Zero Message Queue
@@ -7,7 +8,7 @@ Summary(en.UTF-8):	ØMQ - Zero Message Queue
 Summary(pl.UTF-8):	ØMQ (Zero Message Queue) - kolejka komunikatów
 Name:		zeromq
 Version:	3.2.3
-Release:	1
+Release:	2
 License:	LGPL v3+
 Group:		Libraries
 Source0:	http://download.zeromq.org/%{name}-%{version}.tar.gz
@@ -19,7 +20,9 @@ BuildRequires:	automake
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
 BuildRequires:	libuuid-devel
+%{?with_pgm:BuildRequires:	libpgm-devel >= 5.2}
 BuildRequires:	pkgconfig
+BuildRequires:	sed >= 4.0
 BuildRequires:	xmlto
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -54,6 +57,7 @@ Summary(en.UTF-8):	ØMQ library header files for development
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki ØMQ
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	libstdc++-devel
 Obsoletes:	zeromq-pthreads-devel
 
 %description devel
@@ -85,6 +89,8 @@ Statyczna biblioteka ØMQ.
 %prep
 %setup -q
 
+%{__sed} -i -e 's/openpgm-5\.1/openpgm-5.2/' configure.in
+
 %build
 %{__libtoolize}
 %{__aclocal}
@@ -92,7 +98,8 @@ Statyczna biblioteka ØMQ.
 %{__automake}
 %{__autoheader}
 %configure \
-	--disable-silent-rules
+	--disable-silent-rules \
+	%{?with_pgm:--with-system-pgm}
 %{__make}
 
 %if %{with tests}
