@@ -7,20 +7,21 @@ Summary:	0MQ - Zero Message Queue
 Summary(en.UTF-8):	ØMQ - Zero Message Queue
 Summary(pl.UTF-8):	ØMQ (Zero Message Queue) - kolejka komunikatów
 Name:		zeromq
-Version:	3.2.3
-Release:	2
+Version:	4.0.1
+Release:	1
 License:	LGPL v3+
 Group:		Libraries
 Source0:	http://download.zeromq.org/%{name}-%{version}.tar.gz
-# Source0-md5:	1abf8246363249baf5931a065ee38203
+# Source0-md5:	e738c310d135e20fa48c5b348da18e22
 URL:		http://www.zeromq.org/
 BuildRequires:	asciidoc
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake
+BuildRequires:	libsodium-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
 BuildRequires:	libuuid-devel
-%{?with_pgm:BuildRequires:	libpgm-devel >= 5.2}
+%{?with_pgm:BuildRequires:	libpgm-devel >= 5.1}
 BuildRequires:	pkgconfig
 BuildRequires:	sed >= 4.0
 BuildRequires:	xmlto
@@ -89,8 +90,6 @@ Statyczna biblioteka ØMQ.
 %prep
 %setup -q
 
-%{__sed} -i -e 's/openpgm-5\.1/openpgm-5.2/' configure.in
-
 %build
 %{__libtoolize}
 %{__aclocal}
@@ -123,7 +122,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog MAINTAINERS NEWS README
+%doc AUTHORS ChangeLog MAINTAINERS NEWS
+%attr(755,root,root) %{_bindir}/curve_keygen
 %attr(755,root,root) %{_libdir}/libzmq.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libzmq.so.3
 
