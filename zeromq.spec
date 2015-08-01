@@ -1,5 +1,7 @@
 #
 # Conditional build:
+%bcond_with	kerberos5	# GSSAPI client support [expects MIT Kerberos]
+%bcond_with	norm		# NORM extension
 %bcond_without	pgm		# PGM extension (using OpenPGM library)
 %bcond_without	tests		# build without tests
 
@@ -7,21 +9,23 @@ Summary:	0MQ - Zero Message Queue
 Summary(en.UTF-8):	ØMQ - Zero Message Queue
 Summary(pl.UTF-8):	ØMQ (Zero Message Queue) - kolejka komunikatów
 Name:		zeromq
-Version:	4.0.5
-Release:	2
-License:	LGPL v3+
+Version:	4.1.2
+Release:	1
+License:	LGPL v3+ with linking exception
 Group:		Libraries
 Source0:	http://download.zeromq.org/%{name}-%{version}.tar.gz
-# Source0-md5:	73c39f5eb01b9d7eaf74a5d899f1d03d
+# Source0-md5:	159c0c56a895472f02668e692d122685
 URL:		http://www.zeromq.org/
 BuildRequires:	asciidoc
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake
+%{?with_krb5:BuildRequires:	krb5-devel}
 BuildRequires:	libsodium-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
 BuildRequires:	libuuid-devel
 %{?with_pgm:BuildRequires:	libpgm-devel >= 5.1}
+%{?with_norm:BuildRequires:	norm-devel}
 BuildRequires:	pkgconfig
 BuildRequires:	sed >= 4.0
 BuildRequires:	xmlto
@@ -90,6 +94,8 @@ Statyczna biblioteka ØMQ.
 %prep
 %setup -q
 
+%{__sed} -ne '/SPECIAL EXCEPTION GRANTED/,$p' COPYING.LESSER > COPYING.exception
+
 %build
 %{__libtoolize}
 %{__aclocal}
@@ -98,7 +104,9 @@ Statyczna biblioteka ØMQ.
 %{__autoheader}
 %configure \
 	--disable-silent-rules \
-	%{?with_pgm:--with-system-pgm}
+	%{?with_kerberos5:--with-libgssapi_krb5} \
+	%{?with_norm:--with-norm} \
+	%{?with_pgm:--with-pgm}
 %{__make}
 
 %if %{with tests}
@@ -122,10 +130,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog MAINTAINERS NEWS
+%doc AUTHORS COPYING.exception ChangeLog MAINTAINERS NEWS
 %attr(755,root,root) %{_bindir}/curve_keygen
 %attr(755,root,root) %{_libdir}/libzmq.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libzmq.so.4
+%attr(755,root,root) %ghost %{_libdir}/libzmq.so.5
 
 %files devel
 %defattr(644,root,root,755)
