@@ -10,7 +10,7 @@ Summary(en.UTF-8):	ØMQ - Zero Message Queue
 Summary(pl.UTF-8):	ØMQ (Zero Message Queue) - kolejka komunikatów
 Name:		zeromq
 Version:	4.1.2
-Release:	1
+Release:	2
 License:	LGPL v3+ with linking exception
 Group:		Libraries
 Source0:	http://download.zeromq.org/%{name}-%{version}.tar.gz
