@@ -9,12 +9,14 @@ Summary:	0MQ - Zero Message Queue
 Summary(en.UTF-8):	ØMQ - Zero Message Queue
 Summary(pl.UTF-8):	ØMQ (Zero Message Queue) - kolejka komunikatów
 Name:		zeromq
-Version:	4.1.5
+Version:	4.1.6
 Release:	1
 License:	LGPL v3+ with linking exception
 Group:		Libraries
 Source0:	https://github.com/zeromq/zeromq4-1/releases/download/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	e7adf4b7dbae09b28cfd10d26cd67fac
+# Source0-md5:	c89db4dbc0b90c34c9f4983cbff6d321
+Source1:	https://raw.githubusercontent.com/zeromq/cppzmq/master/zmq.hpp
+# Source1-md5:	c732ee5409f8419323185d8aa44bc54c
 URL:		http://www.zeromq.org/
 BuildRequires:	asciidoc
 BuildRequires:	autoconf >= 2.61
@@ -91,6 +93,16 @@ Static ØMQ library.
 %description static -l pl.UTF-8
 Statyczna biblioteka ØMQ.
 
+%package -n cppzmq-devel
+Summary:	Development files for cppzmq
+Group:		Development/Libraries
+License:	MIT
+Requires:	%{name}-devel = %{version}-%{release}
+
+%description -n cppzmq-devel
+The cppzmq-devel package contains libraries and header files for
+developing applications that use the C++ header files of %{name}.
+
 %prep
 %setup -q
 
@@ -118,6 +130,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+install %{SOURCE1} $RPM_BUILD_ROOT%{_includedir}
 
 # obsoleted by pkg-config
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
@@ -147,3 +161,7 @@ rm -rf $RPM_BUILD_ROOT
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libzmq.a
+
+%files -n cppzmq-devel
+%defattr(644,root,root,755)
+%{_includedir}/zmq.hpp
