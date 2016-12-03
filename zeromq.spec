@@ -95,13 +95,18 @@ Statyczna biblioteka ØMQ.
 
 %package -n cppzmq-devel
 Summary:	Development files for cppzmq
+Summary(pl.UTF-8):	Pliki programistyczne cppzmq
 Group:		Development/Libraries
 License:	MIT
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description -n cppzmq-devel
-The cppzmq-devel package contains libraries and header files for
-developing applications that use the C++ header files of %{name}.
+The cppzmq-devel package contains the header file for developing
+applications that use the C++ interface for 0MQ.
+
+%description -n cppzmq-devel -l pl.UTF-8
+Ten pakiet zawiera plik nagłówkowy do tworzenia aplikacji
+wykorzystujących interfejs C++ do ØMQ.
 
 %prep
 %setup -q
