@@ -9,15 +9,14 @@ Summary:	0MQ - Zero Message Queue
 Summary(en.UTF-8):	ØMQ - Zero Message Queue
 Summary(pl.UTF-8):	ØMQ (Zero Message Queue) - kolejka komunikatów
 Name:		zeromq
-Version:	4.2.0
+Version:	4.2.2
 Release:	1
 License:	LGPL v3+ with linking exception
 Group:		Libraries
 Source0:	https://github.com/zeromq/libzmq/releases/download/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	1fb2595d2a905a9e820c976a1d8348bc
+# Source0-md5:	52499909b29604c1e47a86f1cb6a9115
 Source1:	https://raw.githubusercontent.com/zeromq/cppzmq/master/zmq.hpp
 # Source1-md5:	03ea6bb87901660ad09df8f6c7a62e59
-Patch0:		zeromq-4.2.0-dl-backport.patch
 URL:		http://www.zeromq.org/
 BuildRequires:	asciidoc
 BuildRequires:	autoconf >= 2.61
@@ -111,7 +110,6 @@ wykorzystujących interfejs C++ do ØMQ.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %{__sed} -ne '/SPECIAL EXCEPTION GRANTED/,$p' COPYING.LESSER > COPYING.exception
 
@@ -152,6 +150,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS COPYING.exception ChangeLog NEWS
+%attr(755,root,root) %{_bindir}/curve_keygen
 %attr(755,root,root) %{_libdir}/libzmq.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libzmq.so.5
 
