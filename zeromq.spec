@@ -9,13 +9,13 @@ Summary:	0MQ - Zero Message Queue
 Summary(en.UTF-8):	ØMQ - Zero Message Queue
 Summary(pl.UTF-8):	ØMQ (Zero Message Queue) - kolejka komunikatów
 Name:		zeromq
-Version:	4.2.3
+Version:	4.2.5
 Release:	1
 License:	LGPL v3+ with linking exception
 Group:		Libraries
 #Source0Download: https://github.com/zeromq/libzmq/releases/
 Source0:	https://github.com/zeromq/libzmq/releases/download/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	c4e18bd0584ccd34213f152c11f54d6c
+# Source0-md5:	a1c95b34384257e986842f4d006957b8
 URL:		http://www.zeromq.org/
 BuildRequires:	asciidoc
 BuildRequires:	autoconf >= 2.61
