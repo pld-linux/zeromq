@@ -1,5 +1,6 @@
 #
 # Conditional build:
+%bcond_without	gnutls		# TLS transport (GnuTLS based)
 %bcond_with	kerberos5	# GSSAPI client support [expects MIT Kerberos]
 %bcond_with	norm		# NORM extension
 %bcond_without	pgm		# PGM extension (using OpenPGM library)
@@ -9,23 +10,28 @@ Summary:	0MQ - Zero Message Queue
 Summary(en.UTF-8):	ØMQ - Zero Message Queue
 Summary(pl.UTF-8):	ØMQ (Zero Message Queue) - kolejka komunikatów
 Name:		zeromq
-Version:	4.3.2
+Version:	4.3.3
 Release:	1
 License:	LGPL v3+ with linking exception
 Group:		Libraries
 #Source0Download: https://github.com/zeromq/libzmq/releases/
 Source0:	https://github.com/zeromq/libzmq/releases/download/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	2047e917c2cc93505e2579bcba67a573
+# Source0-md5:	78acc277d95e10812d71b2b3c3c3c9a9
 URL:		http://www.zeromq.org/
 BuildRequires:	asciidoc
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake
+%{?with_gnutls:BuildRequires:	gnutls-devel >= 3.1.4}
 %{?with_krb5:BuildRequires:	krb5-devel}
+BuildRequires:	libbsd-devel
+# 5.1, 5.2, 5.3 are supported
+%{?with_pgm:BuildRequires:	libpgm-devel >= 5.1}
+%{?with_pgm:BuildRequires:	libpgm-devel < 5.4}
 BuildRequires:	libsodium-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
+BuildRequires:	libunwind-devel
 BuildRequires:	libuuid-devel
-%{?with_pgm:BuildRequires:	libpgm-devel >= 5.1}
 %{?with_norm:BuildRequires:	norm-devel}
 BuildRequires:	pkgconfig
 BuildRequires:	sed >= 4.0
@@ -63,7 +69,12 @@ Summary(en.UTF-8):	ØMQ library header files for development
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki ØMQ
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+%{?with_gnutls:Requires:	gnutls >= 3.1.4}
+Requires:	libbsd-devel
+%{?with_pgm:Requires:	libpgm-devel >= 5.1}
+Requires:	libsodium-devel
 Requires:	libstdc++-devel
+Requires:	libunwind-devel
 Obsoletes:	zeromq-pthreads-devel
 
 %description devel
@@ -119,11 +130,13 @@ wykorzystujących interfejs C++ do ØMQ.
 %{__automake}
 %{__autoheader}
 %configure \
+	--enable-drafts \
 	--disable-silent-rules \
 	%{?with_kerberos5:--with-libgssapi_krb5} \
 	--with-libsodium \
 	%{?with_norm:--with-norm} \
-	%{?with_pgm:--with-pgm}
+	%{?with_pgm:--with-pgm} \
+	%{?with_gnutls:--with-tls}
 %{__make}
 
 %if %{with tests}
