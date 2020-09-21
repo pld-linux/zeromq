@@ -11,7 +11,7 @@ Summary(en.UTF-8):	ØMQ - Zero Message Queue
 Summary(pl.UTF-8):	ØMQ (Zero Message Queue) - kolejka komunikatów
 Name:		zeromq
 Version:	4.3.3
-Release:	1
+Release:	2
 License:	LGPL v3+ with linking exception
 Group:		Libraries
 #Source0Download: https://github.com/zeromq/libzmq/releases/
@@ -122,6 +122,9 @@ wykorzystujących interfejs C++ do ØMQ.
 %setup -q
 
 %{__sed} -ne '/SPECIAL EXCEPTION GRANTED/,$p' COPYING.LESSER > COPYING.exception
+
+# uses some multicast networking, timeouts on some hosts
+%{__sed} -i -e '/^\s*tests\/test_radio_dish /d' Makefile.am
 
 %build
 %{__libtoolize}
