@@ -139,7 +139,8 @@ wykorzystujących interfejs C++ do ØMQ.
 	--with-libsodium \
 	%{?with_norm:--with-norm} \
 	%{?with_pgm:--with-pgm} \
-	%{?with_gnutls:--with-tls}
+	%{?with_gnutls:--with-tls} \
+	--disable-Werror
 %{__make}
 
 %if %{with tests}
