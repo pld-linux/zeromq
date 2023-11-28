@@ -10,13 +10,13 @@ Summary:	0MQ - Zero Message Queue
 Summary(en.UTF-8):	ØMQ - Zero Message Queue
 Summary(pl.UTF-8):	ØMQ (Zero Message Queue) - kolejka komunikatów
 Name:		zeromq
-Version:	4.3.4
-Release:	2
-License:	LGPL v3+ with linking exception
+Version:	4.3.5
+Release:	1
+License:	MPL v2.0
 Group:		Libraries
 #Source0Download: https://github.com/zeromq/libzmq/releases/
 Source0:	https://github.com/zeromq/libzmq/releases/download/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	c897d4005a3f0b8276b00b7921412379
+# Source0-md5:	ae933b1e98411fd7cb8309f9502d2737
 URL:		http://www.zeromq.org/
 BuildRequires:	asciidoc
 BuildRequires:	autoconf >= 2.61
@@ -75,7 +75,7 @@ Requires:	libbsd-devel
 Requires:	libsodium-devel
 Requires:	libstdc++-devel
 Requires:	libunwind-devel
-Obsoletes:	zeromq-pthreads-devel
+Obsoletes:	zeromq-pthreads-devel < 2
 
 %description devel
 0MQ library header files for development.
@@ -92,7 +92,7 @@ Summary(en.UTF-8):	Static ØMQ library
 Summary(pl.UTF-8):	Statyczna biblioteka ØMQ
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
-Obsoletes:	zeromq-pthreads-static
+Obsoletes:	zeromq-pthreads-static < 2
 
 %description static
 Static 0MQ library.
@@ -120,8 +120,6 @@ wykorzystujących interfejs C++ do ØMQ.
 
 %prep
 %setup -q
-
-%{__sed} -ne '/SPECIAL EXCEPTION GRANTED/,$p' COPYING.LESSER > COPYING.exception
 
 # uses some multicast networking, timeouts on some hosts
 %{__sed} -i -e '/^\s*tests\/test_radio_dish /d' Makefile.am
@@ -164,7 +162,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS COPYING.exception ChangeLog NEWS
+%doc AUTHORS ChangeLog NEWS
 %attr(755,root,root) %{_bindir}/curve_keygen
 %attr(755,root,root) %{_libdir}/libzmq.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libzmq.so.5
